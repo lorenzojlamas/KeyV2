@@ -17,16 +17,24 @@ include <../includes.scad>
    8. use a powder-coated bed for extra points
 */
 
+$font_size = 8;
 legends = ["F1", "1", "q", "a", "z", ""];
 for (x = [0:1:4]) {
   translate_u(0,-x) dcs_row(x, 0) upside_down() legend(legends[x]) {
     $dish_type = "disable";
-    $inset_legend_depth = 0.2; // whatever layer height you use
+    $inset_legend_depth = 0.5; // whatever layer height you use
+    // Imprimir tecla
+    // union() {
+    //   debug() key(true);
+    //   dished() {
+    //     legends($inset_legend_depth);
+    //   }
+    // }
 
+    // Imprimir legenda
     union() {
-      // swap the debug()s to render opposite part
       debug() key(true);
-      /* debug() */ dished() {
+      dished() {
         legends($inset_legend_depth);
       }
     }

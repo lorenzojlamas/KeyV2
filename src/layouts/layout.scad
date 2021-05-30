@@ -20,7 +20,7 @@ function double_sculpted_column(column, row_length, column_sculpt_profile) =
         1hand(column, row_length) : (column_sculpt_profile == "cresting_wave") ?
           cresting_wave(column, row_length) : 0;
 
-module layout(list, profile="dcs", legends=undef, front_legends=undef, row_sculpting_offset=0, row_override=undef, column_sculpt_profile="2hands", column_override=undef) {
+module layout(list, profile="dcs", legends=undef, legends_aux=undef, front_legends=undef, row_sculpting_offset=0, row_override=undef, column_sculpt_profile="2hands", column_override=undef) {
   for (row = [0:len(list)-1]){
     /* echo("**ROW**:", row); */
     row_length = len(list[row]);
@@ -37,7 +37,9 @@ module layout(list, profile="dcs", legends=undef, front_legends=undef, row_sculp
       if (key_length >= 1) {
         translate_u(column_distance - (key_length/2), -row) {
         
-          key_profile(profile, row_sculpting, column_value) u(key_length) legend(legends ? legends[row][column] : "") front_legend(front_legends ? front_legends[row][column] : "") cherry() { // (row+4) % 5 + 1
+          if(legends_aux[row][column] != "") {
+          // echo(str("CASO TRUE = ", legends_aux[row][column]));
+          key_profile(profile, row_sculpting, column_value) u(key_length) legend(legends ? legends[row][column] : "", [1,1]) legend(legends_aux ? legends_aux[row][column] : "", [-1,-1]) front_legend(front_legends ? front_legends[row][column] : "") cherry() { // (row+4) % 5 + 1
           $row = row;
           $column = column;
 
@@ -83,6 +85,106 @@ module layout(list, profile="dcs", legends=undef, front_legends=undef, row_sculp
               }
             }
           }
+
+
+
+          } else {
+            // echo(str("CASO FALSE = ", legends_aux[row][column]));
+          key_profile(profile, row_sculpting, column_value) u(key_length) legend(legends ? legends[row][column] : "",position=[0,0], size=$font_size+2)  front_legend(front_legends ? front_legends[row][column] : "") cherry() { // (row+4) % 5 + 1
+          $row = row;
+          $column = column;
+
+            if (key_length == 6.25) {
+              spacebar() {
+                if ($children) {
+                  children();
+                } else {
+                  key();
+                }
+              }
+            } else if (key_length == 2.25) {
+              lshift() {
+                if ($children) {
+                  children();
+                } else {
+                  key();
+                }
+              }
+            } else if (key_length == 2) {
+              backspace() {
+                if ($children) {
+                  children();
+                } else {
+                  key();
+                }
+              }
+            } else if (key_length == 2.75) {
+              rshift() {
+                if ($children) {
+                  children();
+                } else {
+                  key();
+                }
+              }
+            } else {
+              {
+                if ($children) {
+                  children();
+                } else {
+                  key();
+                }
+              }
+            }
+          }
+          }
+
+
+          // key_profile(profile, row_sculpting, column_value) u(key_length) legend(legends ? legends[row][column] : "",, [1,1]) legend(legends_aux ? legends_aux[row][column] : "",  [-1,-1]) front_legend(front_legends ? front_legends[row][column] : "") cherry() { // (row+4) % 5 + 1
+          // $row = row;
+          // $column = column;
+
+          //   if (key_length == 6.25) {
+          //     spacebar() {
+          //       if ($children) {
+          //         children();
+          //       } else {
+          //         key();
+          //       }
+          //     }
+          //   } else if (key_length == 2.25) {
+          //     lshift() {
+          //       if ($children) {
+          //         children();
+          //       } else {
+          //         key();
+          //       }
+          //     }
+          //   } else if (key_length == 2) {
+          //     backspace() {
+          //       if ($children) {
+          //         children();
+          //       } else {
+          //         key();
+          //       }
+          //     }
+          //   } else if (key_length == 2.75) {
+          //     rshift() {
+          //       if ($children) {
+          //         children();
+          //       } else {
+          //         key();
+          //       }
+          //     }
+          //   } else {
+          //     {
+          //       if ($children) {
+          //         children();
+          //       } else {
+          //         key();
+          //       }
+          //     }
+          //   }
+          // }
         }
       }
     }
