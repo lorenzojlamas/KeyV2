@@ -55,18 +55,18 @@ $stabilizer_type = "costar_stabilizer"; // [costar_stabilizer, cherry_stabilizer
 
 layout(helix_layout, "dcs", legends=helix_layout_legends,legends_aux=helix_layout_legends_aux, front_legends=helix_layout_front_legends, row_sculpting_offset=row_sculpting_offset, column_override=column_override, column_sculpt_profile="cresting_wave") 
  // whatever layer height you use
-    // Imprimir tecla
-    union() {
-      /*debug()*/ key(true);
-      debug() dished() {
-        legends($inset_legend_depth);
-      }
-    }
-
-    // Imprimir legenda
+    // // Imprimir tecla
     // union() {
-    //   debug() key(true);
-    //   dished() {
+    //   /*debug()*/ key(true);
+    //   debug() dished() {
     //     legends($inset_legend_depth);
     //   }
     // }
+
+    Imprimir legenda
+    union() {
+      debug() key(true);
+      dished() {
+        legends($inset_legend_depth);
+      }
+    }
